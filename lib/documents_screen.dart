@@ -36,5 +36,3 @@ class DocumentsScreen extends StatelessWidget {
     );
   }
 }
-
-
