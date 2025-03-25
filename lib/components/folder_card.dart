@@ -6,7 +6,7 @@ class FolderCard extends StatelessWidget {
   final Icon icon;
   final VoidCallback? onTap;
 
-  FolderCard({
+  const FolderCard({super.key, 
     required this.title,
     required this.color,
     required this.icon,
