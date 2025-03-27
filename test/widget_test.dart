@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:friends_hch/home_screen2.dart';
+import 'package:friends_hch/home_screen.dart';
 
 
 void main() {

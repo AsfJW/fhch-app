@@ -35,13 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
         child: Column(
           children: [
-            Container(child: Image.asset('assets/images/logos/logo-150.png')),
+            Image.asset('assets/images/logos/logo-150.png'),
             SizedBox(height: 20.0),
-            Container(
-              child: Text(
-                'Here be news - from website for quick edit?',
-                style: TextStyle(fontSize: 25),
-              ),
+            Text(
+              'Here be news - from website for quick edit?',
+              style: TextStyle(fontSize: 25),
             ),
             SizedBox(height: 25.0),
             ...sections.map((section) {
