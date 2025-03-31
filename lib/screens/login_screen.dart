@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:friends_hch/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+  //static const String id = 'login_screen';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -34,8 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text,
         );
+
         // Navigate to the next screen upon successful login
-        // Example: Navigator.pushReplacementNamed(context, '/home');
+        // ignore: use_build_context_synchronously
+        // Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushNamed(context, 'Home');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Login successful!')),

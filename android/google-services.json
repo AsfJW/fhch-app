@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1078411658463",
+    "project_id": "friends-of-hch",
+    "storage_bucket": "friends-of-hch.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078411658463:android:f9aeb5ca34922f573d556a",
+        "android_client_info": {
+          "package_name": "com.example.friends_hch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbSYRdv-P-4KZwIv_bjZtDDJHD2y26ebk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

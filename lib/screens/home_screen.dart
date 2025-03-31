@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:friends_hch/components/folder_card.dart';
-import 'package:friends_hch/documents_screen.dart';
+import 'package:friends_hch/screens/documents_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  static const String id = 'home_screen';
+  //const HomeScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
