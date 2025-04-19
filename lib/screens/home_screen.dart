@@ -4,6 +4,8 @@ import 'package:friends_hch/screens/documents_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
+
+  const HomeScreen({super.key});
   //const HomeScreen({super.key});
 
   @override

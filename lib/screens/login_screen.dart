@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:friends_hch/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,9 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
           password: _passwordController.text,
         );
 
-        // Navigate to the next screen upon successful login
-        // ignore: use_build_context_synchronously
-        // Navigator.pushReplacementNamed(context, '/home');
         Navigator.pushNamed(context, 'Home');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
