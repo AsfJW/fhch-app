@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:marquee/marquee.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:friends_hch/components/folder_card.dart';
 import 'package:friends_hch/screens/documents_screen.dart';
+import 'package:friends_hch/screens/add_news_screen.dart';
+import 'package:friends_hch/screens/upload_document_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
@@ -29,6 +34,55 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    Future<bool> isAdmin() async {
+      if (user == null) {
+        return false;
+      }
+      try {
+        final doc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        return doc.data()?['isAdmin'] ?? false;
+      } catch (e) {
+        print("Error checking admin status: $e");
+        return false;
+      }
+    }
+
+    void navigateToUpload() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UploadDocumentScreen(),
+        ),
+      );
+    }
+    void navigateToAddNews() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddNewsScreen(),
+        ),
+      );
+    }
+    Widget adminAddNewsButton = FutureBuilder<bool>(
+      future: isAdmin(),
+      builder: (context, snapshot) => snapshot.data == true
+          ? FloatingActionButton(
+              onPressed: navigateToAddNews,
+              child: Icon(Icons.add),
+              backgroundColor: Colors.green,
+            )
+          : SizedBox.shrink(),
+    );
+    
+    
+    Widget adminUploadButton = FutureBuilder<bool>(
+      future: isAdmin(),
+      builder: (context, snapshot) => snapshot.data == true ? FloatingActionButton(onPressed: navigateToUpload, child: Icon(Icons.upload_file)) : SizedBox.shrink(),
+    );
     return Scaffold(
       appBar: AppBar(
           centerTitle: true, title: Text('Welcome to the Friends of HCH!')),
@@ -36,13 +90,32 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
         child: Column(
           children: [
-            Image.asset('assets/images/logos/logo-150.png'),
-            SizedBox(height: 20.0),
-            Text(
-              'Here be news - from website for quick edit?',
-              style: TextStyle(fontSize: 25),
+            SizedBox(
+              height: 50,
+              child: FutureBuilder<QuerySnapshot>(
+                future: FirebaseFirestore.instance.collection('news').get(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                    final newsList = snapshot.data!.docs
+                        .map((doc) => doc['content'] as String)
+                        .toList();
+                    return Marquee(
+                      text: newsList.join('   '),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      scrollAxis: Axis.horizontal,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      blankSpace: 20.0,
+                      velocity: 100.0,
+                      pauseAfterRound: Duration(seconds: 1),
+                    );
+                  } else {
+                    return Text('No news available.');
+                  }
+                },
+              ),
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 20.0),
+          
             ...sections.map((section) {
               return FolderCard(
                 title: section['title'],
@@ -62,6 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
           ],
         ),
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [adminUploadButton, SizedBox(width: 16), adminAddNewsButton],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
